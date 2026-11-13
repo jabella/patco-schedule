@@ -1,8 +1,8 @@
 # patco-schedule
 
 PATCO Speedline timetables as small per-station JSON files, rebuilt daily from
-PATCO's official GTFS feed. Used by a PATCO
-"next train" app for Tronbyt/Tidbyt displays.
+PATCO's official GTFS feed. Used by the
+[PATCO app for Tronbyt/Tidbyt](https://github.com/tronbyt/apps/tree/main/apps/patco).
 
 PATCO has no real-time train tracking, so the schedule is all there is. The
 feed carries the weekday/Saturday/Sunday patterns plus special-service days
