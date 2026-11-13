@@ -1,0 +1,127 @@
+{
+ "feed_sha1": "17a5dab16642",
+ "feed_version": "20",
+ "first_day": "20260924",
+ "last_day": "20261231",
+ "services": {
+  "s0": "194 Saturday",
+  "s1": "194 Sunday",
+  "s2": "194 Weekday",
+  "s3": "Bike MS",
+  "s4": "Day Base Track Work",
+  "s5": "Sunday B"
+ },
+ "stops": [
+  {
+   "directions": [
+    "phl"
+   ],
+   "id": "1",
+   "name": "Lindenwold"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "2",
+   "name": "Ashland"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "3",
+   "name": "Woodcrest"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "4",
+   "name": "Haddonfield"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "5",
+   "name": "Westmont"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "6",
+   "name": "Collingswood"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "7",
+   "name": "Ferry Avenue"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "8",
+   "name": "Broadway"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "9",
+   "name": "City Hall"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "10",
+   "name": "Franklin Square"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "11",
+   "name": "8th and Market"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "12",
+   "name": "9-10th and Locust"
+  },
+  {
+   "directions": [
+    "lnd",
+    "phl"
+   ],
+   "id": "13",
+   "name": "12-13th and Locust"
+  },
+  {
+   "directions": [
+    "lnd"
+   ],
+   "id": "14",
+   "name": "15-16th and Locust"
+  }
+ ],
+ "v": 1
+}

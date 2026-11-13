@@ -1,0 +1,71 @@
+name: Update PATCO schedule
+
+on:
+  schedule:
+    - cron: "17 9 * * *" # daily, ~4-5am Eastern
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [convert.py, overrides.json, .github/workflows/update.yml]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-schedule
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download GTFS
+        run: |
+          # PATCO's current feed is hosted by National RTAP; the ridepatco.org
+          # developer link is kept as a fallback.
+          for url in \
+            "https://rapid.nationalrtap.org/GTFSFileManagement/UserUploadFiles/13562/PATCO_GTFS.zip" \
+            "https://www.ridepatco.org/developers/PortAuthorityTransitCorporation.zip"; do
+            echo "Trying $url"
+            if curl -fsSL --retry 3 -m 120 -o gtfs.zip "$url" && unzip -tq gtfs.zip >/dev/null; then
+              echo "Got feed from $url"
+              exit 0
+            fi
+          done
+          echo "::error::Could not download a valid GTFS zip"
+          exit 1
+
+      - name: Convert
+        run: python3 convert.py gtfs.zip data overrides.json
+
+      - name: Check the feed covers today
+        run: |
+          python3 - <<'EOF'
+          import json, datetime, zoneinfo, sys
+          idx = json.load(open("data/v1/index.json"))
+          today = datetime.datetime.now(zoneinfo.ZoneInfo("America/New_York")).strftime("%Y%m%d")
+          print("feed", idx["feed_version"], idx["first_day"], "-", idx["last_day"], "today", today)
+          if not (idx["first_day"] <= today <= idx["last_day"]):
+              print("::warning::Feed does not cover today; the app will show 'schedule expired'")
+          days_left = (datetime.date(int(idx["last_day"][:4]), int(idx["last_day"][4:6]), int(idx["last_day"][6:])) - datetime.date.today()).days
+          if days_left < 14:
+              print(f"::warning::Feed ends in {days_left} days and PATCO hasn't published a newer one yet")
+          EOF
+
+      - name: Commit if changed
+        run: |
+          git add data
+          if git diff --cached --quiet; then
+            echo "Schedule unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update PATCO schedule (feed $(jq -r .feed_version data/v1/index.json))"
+          git push

@@ -1,0 +1,3 @@
+{
+  "_comment": "Optional date overrides: \"YYYYMMDD\": [service_id, ...]. Service IDs come from the feed's calendar.txt (see data/v1/index.json). Remove entries once PATCO's feed covers them."
+}
